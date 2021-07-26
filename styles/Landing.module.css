@@ -1,0 +1,35 @@
+.headerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.table {
+    width: 60%;
+    font-size: 1.2rem;
+    margin: 0rem 0.5rem 2rem 0.5rem;
+}
+
+/* .thead {
+    float: left;
+} */
+
+.thead th {
+    text-align: left;
+    padding: 0.5em 1em;
+}
+
+/* .tbody {
+    float: left;
+} */
+
+.tbody td {
+    text-align: left;
+    padding: 0.5em 1em;
+}
+
+.weatherIcon {
+    width: 50%;
+    transform: scale(0.55);
+}
