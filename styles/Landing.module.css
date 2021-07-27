@@ -1,28 +1,34 @@
+.navigationContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+}
+
 .headerContainer {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
+    width: 90%;
+    padding: 2.5rem 0;
+}
+
+.tablesContainer {
+    width: 70%;
+    padding-bottom: 1rem;
 }
 
 .table {
-    width: 60%;
+    width: 100%;
     font-size: 1.2rem;
     margin: 0rem 0.5rem 2rem 0.5rem;
 }
-
-/* .thead {
-    float: left;
-} */
 
 .thead th {
     text-align: left;
     padding: 0.5em 1em;
 }
-
-/* .tbody {
-    float: left;
-} */
 
 .tbody td {
     text-align: left;
@@ -32,4 +38,15 @@
 .weatherIcon {
     width: 50%;
     transform: scale(0.55);
+}
+
+.searchForm {
+    display: flex;
+    width: 50%;
+}
+
+.searchInput {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
 }

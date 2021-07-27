@@ -4,7 +4,9 @@ import LandingPage from './landing';
 export default function Home() {
   return (
     <div className={styles.container}>
-      <LandingPage />
+      <div className={styles.main}>
+        <LandingPage />
+      </div>
     </div>
   );
 };
