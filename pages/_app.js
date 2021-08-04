@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+import '../styles/darkTheme.css';
 import Head from 'next/head';
 
 function MyApp({ Component, pageProps }) {

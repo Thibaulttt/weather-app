@@ -48,5 +48,15 @@
 .searchInput {
     flex: 1;
     padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
+    border: none;
+    appearance: none;
+    margin-left: 1em;
+}
+
+.submitButton {
+    appearance: none;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

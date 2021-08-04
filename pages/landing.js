@@ -3,15 +3,25 @@ import { getCurrentWeather } from "./api/weather";
 import styles from "../styles/Landing.module.css";
 import moment from "moment";
 import Header from "../components/header";
-import { Navigation } from "../components/navigation";
+import { TopBar } from "../components/topBar";
 
 const LandingPage = () => {
     const [cityWeather, setCityWeather] = useState({});
     // metric (Celsius), imperial (Fahrenheit), null (Kelvin)
     const [unit, setUnit] = useState({ unit: "metric", label: "(C°)" });
 
+    function updateWeather(event) {
+        console.log(event.target.city.value);
+        event.preventDefault();
+        getCurrentWeather(event.target.city.value, unit.unit).then((res) => {
+            setCityWeather(res.data);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
     useEffect(() => {
-        getCurrentWeather("Périgny", unit.unit).then((res) => {
+        getCurrentWeather("Paris", unit.unit).then((res) => {
             setCityWeather(res.data);
         }).catch((err) => {
             console.log(err);
@@ -21,7 +31,7 @@ const LandingPage = () => {
     return (
         Object.keys(cityWeather).length > 0 ? (
             <>
-                <Navigation />
+                <TopBar updateWeather={updateWeather}/>
                 <Header
                     name={cityWeather.name}
                     country={cityWeather.sys.country}

@@ -2,7 +2,9 @@ import Image from 'next/image';
 import styles from "../styles/Landing.module.css";
 
 const Header = ({ name, country, localDayTime, iconLabel }) => {
+    // https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
     function getIcon(iconLabel) {
+        console.log(iconLabel)
         let iconName = '';
         switch (iconLabel) {
             case "clear sky":
@@ -15,6 +17,7 @@ const Header = ({ name, country, localDayTime, iconLabel }) => {
                 iconName = '/scattered-clouds.svg';
                 break;
             case "broken clouds":
+            case "overcast clouds":
                 iconName = '/broken-clouds.svg';
                 break;
             case "shower rain":
@@ -33,7 +36,7 @@ const Header = ({ name, country, localDayTime, iconLabel }) => {
                 iconName = '/mist.svg';
                 break;
             default:
-                console.error("unknow description");
+                iconName = '/default.svg';
         }
         return iconName;
     }

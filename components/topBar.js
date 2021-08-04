@@ -1,13 +1,15 @@
 import styles from "../styles/Landing.module.css";
 
-const Navigation = () => {
-
+const TopBar = ({ updateWeather }) => {
     return (
         <div className={styles.navigationContainer}>
-            <form className={styles.searchForm}>
-                <input className={styles.searchInput} />
-                <button type="submit">Rechercher</button>
+            {/* <button className={styles.submitButton} onClick={updateWeather}>Rechercher</button> */}
+
+            <form className={styles.searchForm} onSubmit={updateWeather} method="GET">
+                <button className={styles.submitButton} type="submit">Rechercher</button>
+                <input className={styles.searchInput} id="city" name="city" placeholder="Ville" autoComplete="off" required />
             </form>
+
             {/* <form>
                 <input type="radio" id="radio2" name="radios" value="all" checked />
                 <label for="radio1">FR</label>
@@ -20,5 +22,5 @@ const Navigation = () => {
 }
 
 export {
-    Navigation
+    TopBar
 };
