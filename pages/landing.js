@@ -11,9 +11,10 @@ const LandingPage = () => {
     const [unit, setUnit] = useState({ unit: "metric", label: "(C°)" });
 
     function updateWeather(event) {
-        console.log(event.target.city.value);
         event.preventDefault();
+
         getCurrentWeather(event.target.city.value, unit.unit).then((res) => {
+            console.log(res.data)
             setCityWeather(res.data);
         }).catch((err) => {
             console.log(err);
