@@ -4,41 +4,56 @@ import styles from "../styles/Landing.module.css";
 import moment from "moment";
 import Header from "../components/header";
 import { TopBar } from "../components/topBar";
+import { darkTheme } from "../styles/darkTheme";
 
 const LandingPage = () => {
     const [cityWeather, setCityWeather] = useState({});
+    const [localDayTime, setLocalDayTime] = useState("");
+    const format = 'hh:mm:ss a';
+    const startingDawnTime = moment('06:00:00 am', format);
+    const startingDayTime = moment('09:00:00 am', format);
+    const startingTwilightTime = moment('06:00:00 pm', format);
+    const startingNightTime = moment('09:00:00 pm', format);
+
     // metric (Celsius), imperial (Fahrenheit), null (Kelvin)
     const [unit, setUnit] = useState({ unit: "metric", label: "(C°)" });
 
-    function updateWeather(event) {
-        event.preventDefault();
-
-        getCurrentWeather(event.target.city.value, unit.unit).then((res) => {
-            console.log(res.data)
+    function updateWeather(city) {
+        getCurrentWeather(city, unit.unit).then((res) => {
             setCityWeather(res.data);
         }).catch((err) => {
             console.log(err);
         });
     }
 
+    function submitCity(event) {
+        event.preventDefault();
+        updateWeather(event.target.city.value);
+    }
+
+    // function called after the state "cityWeather" is called
     useEffect(() => {
-        getCurrentWeather("Paris", unit.unit).then((res) => {
-            setCityWeather(res.data);
-        }).catch((err) => {
-            console.log(err);
-        });
+        // get the utc time and add the timezone shift
+        setLocalDayTime(moment.utc().add(cityWeather.timezone, "seconds").format(format));
+    }, [cityWeather]);
+
+    useEffect(() => {
+        updateWeather("Paris");
     }, []);
 
     return (
         Object.keys(cityWeather).length > 0 ? (
             <>
-                <TopBar updateWeather={updateWeather}/>
+                <TopBar updateWeather={submitCity} />
                 <Header
                     name={cityWeather.name}
                     country={cityWeather.sys.country}
-                    localDayTime={moment(new Date(cityWeather.dt * 1000)).format('LTS')}
+                    localDayTime={localDayTime}
                     iconLabel={cityWeather.weather[0].description}
                 />
+                {!moment(localDayTime, format).isBetween(startingDayTime, startingNightTime) && (
+                    <style jsx global>{darkTheme}</style>
+                )}
                 <div className={styles.tablesContainer}>
                     <table className={styles.table}>
                         <thead className={styles.thead}>
