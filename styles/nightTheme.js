@@ -1,6 +1,6 @@
 import css from 'styled-jsx/css';
 
-export const darkTheme = css.global`
+export const nightTheme = css.global`
     html,
     body {
         background-color: #222222;

@@ -4,16 +4,16 @@ import styles from "../styles/Landing.module.css";
 import moment from "moment";
 import Header from "../components/header";
 import { TopBar } from "../components/topBar";
-import { darkTheme } from "../styles/darkTheme";
+import { nightTheme } from "../styles/nightTheme";
+import { dawnTheme } from "../styles/dawnTheme";
+import { twilightTheme } from "../styles/twilightTheme";
+import { dayTheme } from "../styles/dayTheme";
+import { dayFormat, times } from "../utils/dayTimes";
 
 const LandingPage = () => {
     const [cityWeather, setCityWeather] = useState({});
     const [localDayTime, setLocalDayTime] = useState("");
-    const format = 'hh:mm:ss a';
-    const startingDawnTime = moment('06:00:00 am', format);
-    const startingDayTime = moment('09:00:00 am', format);
-    const startingTwilightTime = moment('06:00:00 pm', format);
-    const startingNightTime = moment('09:00:00 pm', format);
+    const [theme, setTheme] = useState(dayTheme);
 
     // metric (Celsius), imperial (Fahrenheit), null (Kelvin)
     const [unit, setUnit] = useState({ unit: "metric", label: "(C°)" });
@@ -34,8 +34,28 @@ const LandingPage = () => {
     // function called after the state "cityWeather" is called
     useEffect(() => {
         // get the utc time and add the timezone shift
-        setLocalDayTime(moment.utc().add(cityWeather.timezone, "seconds").format(format));
+        setLocalDayTime(moment.utc().add(cityWeather.timezone, "seconds").format(dayFormat));
     }, [cityWeather]);
+
+    useEffect(() => {
+        // set the theme according to the time of the day
+        if (moment(localDayTime, dayFormat).isBetween(times.dawnBeginning, times.dayBeginning)) {
+            setTheme(dawnTheme);
+        }
+
+        if (moment(localDayTime, dayFormat).isBetween(times.dayBeginning, times.twilightBeginning)) {
+            setTheme(dayTheme);
+        }
+
+        if (moment(localDayTime, dayFormat).isBetween(times.twilightBeginning, times.nightBeginning)) {
+            setTheme(twilightTheme);
+        }
+
+        if (moment(localDayTime, dayFormat).isBetween(times.nightBeginning, times.midnightPm) ||
+            moment(localDayTime, dayFormat).isBetween(times.midnightAm, times.dawnBeginning)) {
+            setTheme(nightTheme);
+        }
+    }, [localDayTime]);
 
     useEffect(() => {
         updateWeather("Paris");
@@ -51,9 +71,7 @@ const LandingPage = () => {
                     localDayTime={localDayTime}
                     iconLabel={cityWeather.weather[0].description}
                 />
-                {!moment(localDayTime, format).isBetween(startingDayTime, startingNightTime) && (
-                    <style jsx global>{darkTheme}</style>
-                )}
+                <style jsx global>{theme}</style>
                 <div className={styles.tablesContainer}>
                     <table className={styles.table}>
                         <thead className={styles.thead}>
