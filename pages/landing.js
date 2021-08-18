@@ -22,7 +22,11 @@ const LandingPage = () => {
         getCurrentWeather(city, unit.unit).then((res) => {
             setCityWeather(res.data);
         }).catch((err) => {
-            console.log(err);
+            if (JSON.parse(err.request.response).message == "city not found") {
+                alert("Aucune ville trouvée");
+            } else {
+                alert("Une erreur est survenue lors de la récupération des données");
+            }
         });
     }
 
@@ -34,7 +38,7 @@ const LandingPage = () => {
     // function called after the state "cityWeather" is called
     useEffect(() => {
         // get the utc time and add the timezone shift
-        setLocalDayTime(moment.utc().add(cityWeather.timezone, "seconds").format(dayFormat));
+        if (cityWeather.timezone) setLocalDayTime(moment.utc().add(cityWeather.timezone, "seconds").format(dayFormat));
     }, [cityWeather]);
 
     useEffect(() => {

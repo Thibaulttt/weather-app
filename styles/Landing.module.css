@@ -60,3 +60,20 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+@media (max-width: 1280px) {
+    .table {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .thead tr {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tbody tr {
+        display: flex;
+        flex-direction: column;
+    }
+}
